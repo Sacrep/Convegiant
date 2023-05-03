@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationInsightsResourceId>/subscriptions/66ff84ae-6f12-4e7d-87cd-7ab68e65bee8/resourceGroups/Convegiant-RG/providers/microsoft.insights/components/ConvegiantAPI</ApplicationInsightsResourceId>
+    <UserSecretsId>40945f5b-2044-4d3b-b79b-70643b8b3204</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Convegiant.Infrastructure\Convegiant.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
