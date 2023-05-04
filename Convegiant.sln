@@ -8,7 +8,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Convegiant.Domain", "Conveg
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Convegiant.Infrastructure", "Convegiant.Infrastructure\Convegiant.Infrastructure.csproj", "{7C15B934-B80D-497D-9DC1-AA72197C3C71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Convegiant.API", "Convegiant.API\Convegiant.API.csproj", "{0BAFA97B-5DE0-4703-97F0-5DB2F33B0E84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Convegiant.API", "Convegiant.API\Convegiant.API.csproj", "{0BAFA97B-5DE0-4703-97F0-5DB2F33B0E84}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{4DFD09BB-3A4C-4A3C-914F-411C9222FB35}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,7 +44,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		        SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
 		SolutionGuid = {E5A20619-9EC1-4925-A58E-EFE3B6206C67}
+		        SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
 	EndGlobalSection
 EndGlobal

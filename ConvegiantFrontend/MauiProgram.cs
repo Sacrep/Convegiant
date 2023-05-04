@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
-using ConvegiantFrontend.Data;
+﻿using Convegiant.Infrastructure;
 using Convegiant.Infrastructure.InMemory;
-using Convegiant.Infrastructure;
+using ConvegiantFrontend.Data;
+using Microsoft.Extensions.Logging;
 
 namespace ConvegiantFrontend;
 
