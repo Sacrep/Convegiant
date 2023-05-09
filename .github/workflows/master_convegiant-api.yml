@@ -29,10 +29,10 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        run: dotnet build Convegiant.API.csproj -c Release
+        run: dotnet build Convegiant.API/Convegiant.API.csproj -c Release
 
       - name: dotnet publish
-        run: dotnet publish Convegiant.API.csproj -c Release -o ${{env.DOTNET_ROOT}}/ConvegiantAPI
+        run: dotnet publish Convegiant.API/Convegiant.API.csproj -c Release -o ${{env.DOTNET_ROOT}}/ConvegiantAPI
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
