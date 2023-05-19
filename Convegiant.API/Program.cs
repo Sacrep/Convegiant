@@ -1,13 +1,17 @@
 using Convegiant.Domain;
 using Convegiant.Domain.Entities;
 using Convegiant.Infrastructure;
+using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]);
+
+var options = new ApplicationInsightsServiceOptions { ConnectionString = builder.Configuration["ApplicationInsights:InstrumentationKey"] };
+builder.Services.AddApplicationInsightsTelemetry(options);
+
 builder.Services.AddAuthorization();
 
 builder.Services.AddSingleton<IRecipeRepository, Convegiant.Infrastructure.InMemory.RecipeRepository>();
