@@ -12,6 +12,24 @@ Possible features for this app include:
 
 If you have any suggestions for new features, talk to us on the discussion page!
 
+## Architecture
+::: mermaid
+flowchart TB
+    admin --> API
+    app --> API
+    API --> Database
+    subgraph Frontend
+    admin["Admin Web UI"]
+    app["Android / iOS app"]
+    end
+    subgraph Backend
+    API
+    end
+    subgraph Database
+    RavenDB
+    end
+:::
+
 ## Technologies
 **.NET 7**
 - .NET MAUI
