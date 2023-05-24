@@ -1,27 +1,25 @@
-﻿namespace Convegiant.Domain.Entities;
+﻿using System.Text.Json.Serialization;
+
+namespace Convegiant.Domain.Entities;
 public class Recipe
 {
+	[JsonConstructor]
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+	private Recipe()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+	{
+	}
+
 	public Recipe(Records.CreateRecipeDTO dto)
-		: this(Guid.NewGuid(), dto.Title, dto.Ingredients, dto.Instructions, dto.DefaultServings, dto.DurationInMinutes)
 	{
+		Title = dto.Title;
+		Ingredients = dto.Ingredients;
+		Instructions = dto.Instructions;
+		DefaultServings = dto.DefaultServings;
+		DurationInMinutes = dto.DurationInMinutes;
 	}
 
-	public Recipe(Guid id, Records.CreateRecipeDTO dto)
-		: this(id, dto.Title, dto.Ingredients, dto.Instructions, dto.DefaultServings, dto.DurationInMinutes)
-	{
-	}
-
-	public Recipe(Guid id, string title, IEnumerable<Records.IngredientWithAmount> ingredients, string instructions, int defaultServings, int duration)
-	{
-		Id = id;
-		Title = title;
-		Ingredients = ingredients;
-		Instructions = instructions;
-		DefaultServings = defaultServings;
-		DurationInMinutes = duration;
-	}
-
-	public Guid Id { get; set; }
+	public string? Id { get; set; }
 
 	public string Title { get; set; }
 

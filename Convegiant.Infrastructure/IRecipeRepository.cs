@@ -6,9 +6,8 @@ namespace Convegiant.Infrastructure;
 public interface IRecipeRepository
 {
 	IEnumerable<Recipe> GetAllRecipes();
-	Recipe? GetRecipeByID(Guid recipeId);
-	Recipe Insert(Records.CreateRecipeDTO recipe);
-	void Delete(Guid recipeId);
-	Recipe Update(Guid recipeId, Records.CreateRecipeDTO recipe);
-	void Save();
+	Recipe? GetRecipeByID(string recipeId);
+	Recipe Insert(Records.CreateRecipeDTO dto);
+	void Delete(string recipeId);
+	Recipe Update(string recipeId, Records.CreateRecipeDTO dto);
 }

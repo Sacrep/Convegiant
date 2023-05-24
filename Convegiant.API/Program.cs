@@ -1,6 +1,7 @@
 using Convegiant.Domain;
 using Convegiant.Domain.Entities;
 using Convegiant.Infrastructure;
+using Convegiant.Infrastructure.Extensions;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.AspNetCore.Http.HttpResults;
 
@@ -14,7 +15,10 @@ builder.Services.AddApplicationInsightsTelemetry(options);
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddSingleton<IRecipeRepository, Convegiant.Infrastructure.InMemory.RecipeRepository>();
+builder.Services.AddRavenDbDatabase(builder.Configuration.GetSection("RavenDB:Urls").Get<string[]>()!);
+builder.Services.AddTransient<IRecipeRepository, Convegiant.Infrastructure.RavenDB.RavenDbRecipeRepository>();
+
+//builder.Services.AddSingleton<IRecipeRepository, Convegiant.Infrastructure.InMemory.InMemoryRecipeRepository>();
 
 var app = builder.Build();
 
@@ -28,7 +32,7 @@ var recipeRepository = app.Services.GetRequiredService<IRecipeRepository>();
 
 app.MapGet("/api/recipes", () => recipeRepository.GetAllRecipes());
 
-app.MapGet("/api/recipes/{recipeId}", Results<Ok<Recipe>, NotFound> (Guid recipeId) =>
+app.MapGet("/api/recipes/{recipeId}", Results<Ok<Recipe>, NotFound> (string recipeId) =>
 	recipeRepository.GetRecipeByID(recipeId)
 	is Recipe recipe
 		? TypedResults.Ok(recipe)
@@ -40,7 +44,7 @@ app.MapPost("/api/recipes", (Records.CreateRecipeDTO dto) =>
 	return TypedResults.Created($"/api/recipes/{recipe.Id}", recipe);
 });
 
-app.MapPatch("/api/recipes/{recipeId}", Results<Created<Recipe>, NotFound> (Guid recipeId, Records.CreateRecipeDTO dto) =>
+app.MapPatch("/api/recipes/{recipeId}", Results<Created<Recipe>, NotFound> (string recipeId, Records.CreateRecipeDTO dto) =>
 {
 	if (recipeRepository.GetRecipeByID(recipeId) == null)
 	{

@@ -25,7 +25,7 @@ public static class MauiProgram
 #endif
 
 		builder.Services.AddSingleton<WeatherForecastService>();
-		builder.Services.AddSingleton<IRecipeRepository, RecipeRepository>();
+		builder.Services.AddSingleton<IRecipeRepository, InMemoryRecipeRepository>();
 
 		return builder.Build();
 	}

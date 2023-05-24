@@ -4,11 +4,11 @@ using Convegiant.Domain.Entities;
 
 namespace Convegiant.Infrastructure.InMemory;
 
-public class RecipeRepository : IRecipeRepository
+public class InMemoryRecipeRepository : IRecipeRepository
 {
 	private readonly List<Recipe> _recipes = new();
 
-	public void Delete(Guid recipeId)
+	public void Delete(string recipeId)
 	{
 		var recipe = _recipes.FirstOrDefault(x => x.Id == recipeId);
 		if (recipe != null)
@@ -22,7 +22,7 @@ public class RecipeRepository : IRecipeRepository
 
 	}
 
-	public Recipe? GetRecipeByID(Guid recipeId)
+	public Recipe? GetRecipeByID(string recipeId)
 	{
 		return _recipes.FirstOrDefault(r => r.Id == recipeId);
 	}
@@ -40,15 +40,13 @@ public class RecipeRepository : IRecipeRepository
 		return recipe;
 	}
 
-	public void Save()
-	{
-		throw new NotImplementedException();
-	}
-
-	public Recipe Update(Guid recipeId, Records.CreateRecipeDTO dto)
+	public Recipe Update(string recipeId, Records.CreateRecipeDTO dto)
 	{
 		var savedRecipe = _recipes.FirstOrDefault(r => r.Id == recipeId);
-		var updatedRecipe = new Recipe(recipeId, dto);
+		var updatedRecipe = new Recipe(dto)
+		{
+			Id = recipeId
+		};
 		savedRecipe = updatedRecipe;
 
 		return updatedRecipe;
