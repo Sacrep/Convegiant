@@ -1,9 +1,13 @@
-﻿namespace Convegiant.Domain.Entities;
+﻿using System.Text.Json.Serialization;
+
+namespace Convegiant.Domain.Entities;
 
 public class Ingredient
 {
 	public required string Name { get; init; }
 
+
+	[JsonConverter(typeof(JsonStringEnumConverter))]
 	public IngredientCategory Type { get; set; }
 
 	public bool IsStaple { get; set; }
@@ -21,7 +25,8 @@ public enum IngredientCategory
 	Meat,
 	Fish,
 	Carbs,
-	Conserve,
+	Fat,
 	Seasoning,
+	Condiment,
 	Misc
 }
