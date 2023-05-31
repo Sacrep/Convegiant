@@ -20,12 +20,13 @@ public class RavenDbRecipeRepository : IRecipeRepository
 		session.SaveChanges();
 	}
 
-	public IEnumerable<Recipe> GetAllRecipes()
+	public IEnumerable<RecipeListItem> GetRecipeList(int skip = 0, int take = 15)
 	{
 		using var session = _store.OpenSession();
 
-		var recipes = session.Query<Recipe>()
-			.Take(100)
+		var recipes = session.Query<RecipeListItem, Recipe_ListView>()
+			.Skip(skip)
+			.Take(take)
 			.ToList();
 
 		return recipes;

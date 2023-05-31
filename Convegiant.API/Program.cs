@@ -15,7 +15,10 @@ builder.Services.AddApplicationInsightsTelemetry(options);
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddRavenDbDatabase(builder.Configuration.GetSection("RavenDB:Urls").Get<string[]>()!);
+builder.Services.AddRavenDbDatabase(
+	builder.Configuration.GetSection("RavenDB:Urls").Get<string[]>() ?? Array.Empty<string>(),
+	builder.Configuration["RavenDB:CertificatePath"] ?? "");
+
 builder.Services.AddTransient<IRecipeRepository, Convegiant.Infrastructure.RavenDB.RavenDbRecipeRepository>();
 
 //builder.Services.AddSingleton<IRecipeRepository, Convegiant.Infrastructure.InMemory.InMemoryRecipeRepository>();
@@ -30,7 +33,7 @@ app.UseAuthorization();
 
 var recipeRepository = app.Services.GetRequiredService<IRecipeRepository>();
 
-app.MapGet("/api/recipes", () => recipeRepository.GetAllRecipes());
+app.MapGet("/api/recipes", () => recipeRepository.GetRecipeList());
 
 app.MapGet("/api/recipes/{recipeId}", Results<Ok<Recipe>, NotFound> (string recipeId) =>
 	recipeRepository.GetRecipeByID(recipeId)

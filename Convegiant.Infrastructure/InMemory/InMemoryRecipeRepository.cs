@@ -27,9 +27,9 @@ public class InMemoryRecipeRepository : IRecipeRepository
 		return _recipes.FirstOrDefault(r => r.Id == recipeId);
 	}
 
-	public IEnumerable<Recipe> GetAllRecipes()
+	public IEnumerable<RecipeListItem> GetRecipeList(int skip = 0, int take = 15)
 	{
-		return _recipes;
+		return _recipes.Skip(skip).Take(take).Select(recipe => recipe.ToListItem());
 	}
 
 	public Recipe Insert(Records.CreateRecipeDTO dto)

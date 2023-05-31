@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Convegiant.Infrastructure.RavenDB;
+using Microsoft.Extensions.DependencyInjection;
 using Raven.Client.Documents;
 using System.Net;
 using System.Net.Sockets;
@@ -10,7 +11,7 @@ public static class ServiceCollectionExtensions
 {
 	private const string DefaultDatabaseName = "Convegiant";
 
-	public static IServiceCollection AddRavenDbDatabase(this IServiceCollection services, string[] nodeUrls, string databaseName = DefaultDatabaseName, string certificatePath = "")
+	public static IServiceCollection AddRavenDbDatabase(this IServiceCollection services, string[] nodeUrls, string certificatePath = "", string databaseName = DefaultDatabaseName)
 	{
 		nodeUrls = nodeUrls.Select(x => x.Replace("localhost", LocalIPAddress)).ToArray();
 
@@ -29,6 +30,10 @@ public static class ServiceCollectionExtensions
 					IdentityPartsSeparator = '_'
 				}
 			}.Initialize();
+
+			// Create DB indexes
+			new Recipe_ListView().Execute(store);
+
 			return store;
 		});
 

@@ -32,4 +32,18 @@ public class Recipe
 	public int DefaultServings { get; set; }
 
 	public int DurationInMinutes { get; set; }
+
+	public RecipeListItem ToListItem()
+	{
+		return new RecipeListItem
+		{
+			Id = Id,
+			Title = Title,
+			TitlePicture = TitlePicture,
+			DurationInMinutes = DurationInMinutes,
+			IngredientCount = Ingredients.Count(),
+			IsVegetarian = !Ingredients.Any(ic => ic.Ingredient.Type == IngredientCategory.Meat || ic.Ingredient.Type == IngredientCategory.Fish),
+			IsVegan = !Ingredients.Any(ic => ic.Ingredient.Type == IngredientCategory.Meat || ic.Ingredient.Type == IngredientCategory.Fish || ic.Ingredient.Type == IngredientCategory.Dairy || ic.Ingredient.Type == IngredientCategory.Eggs)
+		};
+	}
 }
