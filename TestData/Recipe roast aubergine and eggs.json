@@ -4,7 +4,7 @@
         {
             "ingredient": {
                 "name": "aubergine(s) / eggplant(s)",
-                "type": 0,
+                "type": "Vegetable",
                 "isStaple": false
             },
             "quantity": 2
@@ -12,7 +12,7 @@
         {
             "ingredient": {
                 "name": "olive oil",
-                "type": 0,
+                "type": "Fat",
                 "isStaple": true
             },
             "quantity": 4,
@@ -21,7 +21,7 @@
         {
             "ingredient": {
                 "name": "tahini",
-                "type": 0,
+                "type": "Condiment",
                 "isStaple": true
             },
             "quantity": 1,
@@ -30,7 +30,7 @@
         {
             "ingredient": {
                 "name": "Greek yoghurt",
-                "type": 0,
+                "type": "Dairy",
                 "isStaple": false
             },
             "quantity": 100,
@@ -39,7 +39,7 @@
         {
             "ingredient": {
                 "name": "garlic",
-                "type": 0,
+                "type": "Herb",
                 "isStaple": true
             },
             "quantity": 1,
@@ -48,7 +48,7 @@
         {
             "ingredient": {
                 "name": "large egg(s)",
-                "type": 0,
+                "type": "Eggs",
                 "isStaple": false
             },
             "quantity": 4
@@ -56,7 +56,7 @@
         {
             "ingredient": {
                 "name": "plain naan bread(s)",
-                "type": 0,
+                "type": "Carbs",
                 "isStaple": false
             },
             "quantity": 2
@@ -64,7 +64,7 @@
         {
             "ingredient": {
                 "name": "fresh coriander",
-                "type": 0,
+                "type": "Herb",
                 "isStaple": false
             },
             "quantity": 15,
