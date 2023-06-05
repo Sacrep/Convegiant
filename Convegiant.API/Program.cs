@@ -33,7 +33,12 @@ app.UseAuthorization();
 
 var recipeRepository = app.Services.GetRequiredService<IRecipeRepository>();
 
-app.MapGet("/api/recipes", () => recipeRepository.GetRecipeList());
+app.MapGet("/api/recipes", (int page) =>
+{
+	var pageSize = 15;
+	var skip = (page - 1) * pageSize;
+	return recipeRepository.GetRecipeList(skip, pageSize);
+});
 
 app.MapGet("/api/recipes/{recipeId}", Results<Ok<Recipe>, NotFound> (string recipeId) =>
 	recipeRepository.GetRecipeByID(recipeId)
