@@ -1,4 +1,5 @@
 ﻿namespace Convegiant.Domain.Entities;
+
 public class RecipeListItem
 {
 	public string? Id { get; init; }

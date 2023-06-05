@@ -27,7 +27,7 @@ public class Recipe
 
 	public IEnumerable<Records.IngredientWithAmount> Ingredients { get; set; }
 
-	public string Instructions { get; set; }
+	public IEnumerable<string> Instructions { get; set; }
 
 	public int DefaultServings { get; set; }
 
