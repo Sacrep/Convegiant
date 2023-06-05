@@ -11,28 +11,33 @@ public static class ServiceCollectionExtensions
 {
 	private const string DefaultDatabaseName = "Convegiant";
 
-	public static IServiceCollection AddRavenDbDatabase(this IServiceCollection services, string[] nodeUrls, string certificatePath = "", string databaseName = DefaultDatabaseName)
+	public static IServiceCollection AddRavenDbDatabase(this IServiceCollection services, string[] nodeUrls, string certificatePath, string databaseName = DefaultDatabaseName)
 	{
 		nodeUrls = nodeUrls.Select(x => x.Replace("localhost", LocalIPAddress)).ToArray();
 
-		services.AddSingleton<IDocumentStore>(sp =>
+		services.AddSingleton(sp =>
 		{
-			var store = new DocumentStore()
-			{
-				Urls = nodeUrls,
-				Database = databaseName,
-				Certificate = string.IsNullOrEmpty(certificatePath) ? null : new X509Certificate2(certificatePath),
+			IDocumentStore store = new DocumentStore();
 
-				Conventions =
+			if (nodeUrls.Length > 0)
+			{
+				store = new DocumentStore()
+				{
+					Urls = nodeUrls,
+					Database = databaseName,
+					Certificate = string.IsNullOrEmpty(certificatePath) ? null : new X509Certificate2(certificatePath),
+
+					Conventions =
 				{
 					MaxNumberOfRequestsPerSession = 10,
 					UseOptimisticConcurrency = true,
 					IdentityPartsSeparator = '_'
 				}
-			}.Initialize();
+				}.Initialize();
 
-			// Create DB indexes
-			new Recipe_ListView().Execute(store);
+				// Create DB indexes
+				new Recipe_ListView().Execute(store);
+			}
 
 			return store;
 		});

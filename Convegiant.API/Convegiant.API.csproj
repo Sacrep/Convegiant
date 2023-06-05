@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include=".config\dotnet-tools.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
@@ -17,5 +21,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Convegiant.Infrastructure\Convegiant.Infrastructure.csproj" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="dotnet tool restore" />
+    <Exec Command="dotnet swagger tofile --output api.json $(OutputPath)\$(AssemblyName).dll v1 " />
+  </Target>
 
 </Project>
