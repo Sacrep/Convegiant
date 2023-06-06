@@ -22,7 +22,7 @@
     <ProjectReference Include="..\Convegiant.Infrastructure\Convegiant.Infrastructure.csproj" />
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Debug'" >
     <Exec Command="dotnet tool restore" />
     <Exec Command="dotnet swagger tofile --output ..\Convegiant.Api.Spec\api.json $(OutputPath)\$(AssemblyName).dll v1 " EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development"  />
     <Exec Command="dotnet build ..\Convegiant.Api.Spec\Convegiant.Api.Spec.csproj" />
