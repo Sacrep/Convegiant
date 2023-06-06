@@ -22,7 +22,7 @@ public static class ServiceCollectionExtensions
 			{
 				Urls = nodeUrls.Split(';'),
 				Database = options.DatabaseName ?? DefaultDatabaseName,
-				Certificate = string.IsNullOrEmpty(options.CertificateThumbprint) ? null : GetCertificateFromThumbprint(options.CertificateThumbprint),
+				Certificate = string.IsNullOrEmpty(options.Certificate) ? null : new X509Certificate2(Convert.FromBase64String(options.Certificate)),
 				Conventions =
 				{
 					MaxNumberOfRequestsPerSession = 10,
@@ -38,22 +38,6 @@ public static class ServiceCollectionExtensions
 		});
 
 		return services;
-	}
-
-	private static X509Certificate2 GetCertificateFromThumbprint(string thumbprint)
-	{
-		using X509Store certStore = new X509Store(StoreName.My, StoreLocation.CurrentUser);
-		certStore.Open(OpenFlags.ReadOnly);
-		Console.WriteLine("Certificate issuers:" + string.Join(", ", certStore.Certificates.Select(x => x.IssuerName)));
-
-		var validOnly = false;
-		var certCollection = certStore.Certificates.Find(X509FindType.FindByThumbprint, thumbprint, validOnly);
-
-		var cert = certCollection.OfType<X509Certificate2>().FirstOrDefault() ??
-			throw new Exception($"Certificate with thumbprint {thumbprint} was not found");
-
-		Console.WriteLine(cert.IssuerName);
-		return cert;
 	}
 
 	private static string LocalIPAddress
