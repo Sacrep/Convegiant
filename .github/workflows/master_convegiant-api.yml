@@ -35,7 +35,7 @@ jobs:
             files: 'Convegiant.API/appsettings.json'
         env:
             RavenDB.CertificatePath: ${{ secrets.RAVENDBCERTIFICATETHUMBPRINT }}
-            RavenDB.NodeEndpoints: ${{ env.RAVENDBNODES }}
+            RavenDB.NodeEndpoints: ${{ vars.RAVENDBNODES }}
 
       - name: Build with dotnet
         run: dotnet build Convegiant.API\Convegiant.API.csproj -c Release
