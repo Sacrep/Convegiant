@@ -44,6 +44,7 @@ public static class ServiceCollectionExtensions
 	{
 		using X509Store certStore = new X509Store(StoreName.My, StoreLocation.CurrentUser);
 		certStore.Open(OpenFlags.ReadOnly);
+		Console.WriteLine("Certificate issuers:" + string.Join(", ", certStore.Certificates.Select(x => x.IssuerName)));
 
 		var validOnly = false;
 		var certCollection = certStore.Certificates.Find(X509FindType.FindByThumbprint, thumbprint, validOnly);
@@ -51,7 +52,7 @@ public static class ServiceCollectionExtensions
 		var cert = certCollection.OfType<X509Certificate2>().FirstOrDefault() ??
 			throw new Exception($"Certificate with thumbprint {thumbprint} was not found");
 
-		Console.WriteLine(cert.FriendlyName);
+		Console.WriteLine(cert.IssuerName);
 		return cert;
 	}
 
