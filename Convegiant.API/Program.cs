@@ -1,5 +1,6 @@
 using Convegiant.Domain;
 using Convegiant.Domain.Entities;
+using Convegiant.Domain.Options;
 using Convegiant.Infrastructure;
 using Convegiant.Infrastructure.Extensions;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
@@ -15,9 +16,7 @@ builder.Services.AddApplicationInsightsTelemetry(options);
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddRavenDbDatabase(
-	builder.Configuration.GetSection("RavenDB:Urls").Get<string[]>() ?? Array.Empty<string>(),
-	builder.Configuration["RavenDB:CertificatePath"] ?? "");
+builder.Services.AddRavenDbDatabase(builder.Configuration.GetSection(RavenDbOptions.ConfigSection).Get<RavenDbOptions>()!);
 
 builder.Services.AddTransient<IRecipeRepository, Convegiant.Infrastructure.RavenDB.RavenDbRecipeRepository>();
 
@@ -33,12 +32,7 @@ app.UseAuthorization();
 
 var recipeRepository = app.Services.GetRequiredService<IRecipeRepository>();
 
-app.MapGet("/api/recipes", (int page) =>
-{
-	var pageSize = 15;
-	var skip = (page - 1) * pageSize;
-	return recipeRepository.GetRecipeList(skip, pageSize);
-});
+app.MapGet("/api/recipes", (int skip, int take) => recipeRepository.GetRecipeList(skip, take));
 
 app.MapGet("/api/recipes/{recipeId}", Results<Ok<Recipe>, NotFound> (string recipeId) =>
 	recipeRepository.GetRecipeByID(recipeId)

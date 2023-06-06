@@ -12,7 +12,17 @@
         ],
         "parameters": [
           {
-            "name": "page",
+            "name": "skip",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "take",
             "in": "query",
             "required": true,
             "style": "form",

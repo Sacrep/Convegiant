@@ -1,4 +1,5 @@
-﻿using Convegiant.Infrastructure.RavenDB;
+﻿using Convegiant.Domain.Options;
+using Convegiant.Infrastructure.RavenDB;
 using Microsoft.Extensions.DependencyInjection;
 using Raven.Client.Documents;
 using System.Net;
@@ -11,33 +12,27 @@ public static class ServiceCollectionExtensions
 {
 	private const string DefaultDatabaseName = "Convegiant";
 
-	public static IServiceCollection AddRavenDbDatabase(this IServiceCollection services, string[] nodeUrls, string certificatePath, string databaseName = DefaultDatabaseName)
+	public static IServiceCollection AddRavenDbDatabase(this IServiceCollection services, RavenDbOptions options)
 	{
-		nodeUrls = nodeUrls.Select(x => x.Replace("localhost", LocalIPAddress)).ToArray();
+		var nodeUrls = options.NodeEndpoints.Replace("localhost", LocalIPAddress);
 
 		services.AddSingleton(sp =>
 		{
-			IDocumentStore store = new DocumentStore();
-
-			if (nodeUrls.Length > 0)
+			var store = new DocumentStore()
 			{
-				store = new DocumentStore()
-				{
-					Urls = nodeUrls,
-					Database = databaseName,
-					Certificate = string.IsNullOrEmpty(certificatePath) ? null : new X509Certificate2(certificatePath),
-
-					Conventions =
+				Urls = nodeUrls.Split(';'),
+				Database = options.DatabaseName ?? DefaultDatabaseName,
+				Certificate = string.IsNullOrEmpty(options.CertificatePath) ? null : new X509Certificate2(options.CertificatePath),
+				Conventions =
 				{
 					MaxNumberOfRequestsPerSession = 10,
 					UseOptimisticConcurrency = true,
 					IdentityPartsSeparator = '_'
 				}
-				}.Initialize();
+			}.Initialize();
 
-				// Create DB indexes
-				new Recipe_ListView().Execute(store);
-			}
+			// Create DB indexes
+			new Recipe_ListView().Execute(store);
 
 			return store;
 		});
