@@ -30,6 +30,13 @@ jobs:
         with:
           dotnet-version: "7.x"
 
+      - uses: microsoft/variable-substitution@v1 
+        with:
+            files: 'appsettings.json'
+        env:
+            RavenDB.CertificatePath: ${{ secrets.RAVENDBCERTIFICATETHUMBPRINT }}
+            RavenDB.NodeEndpoints: ${{ env.RAVENDBNODES }}
+
       - name: Build with dotnet
         run: dotnet build Convegiant.API\Convegiant.API.csproj -c Release
 
