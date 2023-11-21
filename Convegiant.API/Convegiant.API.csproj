@@ -1,31 +1,29 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationInsightsResourceId>/subscriptions/66ff84ae-6f12-4e7d-87cd-7ab68e65bee8/resourceGroups/Convegiant-RG/providers/microsoft.insights/components/ConvegiantAPI</ApplicationInsightsResourceId>
     <UserSecretsId>40945f5b-2044-4d3b-b79b-70643b8b3204</UserSecretsId>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <Content Include=".config\dotnet-tools.json" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\Convegiant.Infrastructure\Convegiant.Infrastructure.csproj" />
   </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Debug'" >
+  
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Debug'">
     <Exec Command="dotnet tool restore" />
-    <Exec Command="dotnet swagger tofile --output ..\Convegiant.Api.Spec\api.json $(OutputPath)\$(AssemblyName).dll v1 " EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development"  />
+    <Exec Command="dotnet swagger tofile --output ..\Convegiant.Api.Spec\api.json $(OutputPath)\$(AssemblyName).dll v1 " EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" />
     <Exec Command="dotnet build ..\Convegiant.Api.Spec\Convegiant.Api.Spec.csproj" />
   </Target>
-
 </Project>

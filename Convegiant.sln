@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Convegiant.Api.Spec", "Convegiant.Api.Spec\Convegiant.Api.Spec.csproj", "{8DA02C60-24D1-4AD5-B975-9931946FFFBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Convegiant.Api.Spec", "Convegiant.Api.Spec\Convegiant.Api.Spec.csproj", "{8DA02C60-24D1-4AD5-B975-9931946FFFBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
