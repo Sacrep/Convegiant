@@ -1,0 +1,85 @@
+﻿@page "/recipeEdit"
+
+@using Convegiant.Api.Spec
+@using ConvegiantFrontend.Data;
+@inject RecipeService recipeService
+
+<h1>Recipe details</h1>
+
+<EditForm Model="@recipeModel" OnSubmit="@HandleSubmit">
+	<p>
+		<label>
+			Title: <InputText id="title" @bind-Value="recipeModel.Title" />
+		</label>
+	</p>
+
+	<p>
+		<label>
+			Servings: <InputNumber id="servings" @bind-Value="recipeModel.DefaultServings" />
+		</label>
+	</p>
+
+	<p>
+		<label>
+			Duration (minutes): <InputNumber id="title" @bind-Value="recipeModel.DurationInMinutes" />
+		</label>
+	</p>
+
+	<p>
+		<h2>Ingredients:</h2>
+		@for (var i = 0; i < recipeModel.Ingredients.Count; i++)
+		{
+			<InputText placeholder=Potatoes @bind-Value="recipeModel.Ingredients[i].Ingredient.Name" />
+			<label>
+				Amount
+				<InputNumber placeholder=500 @bind-Value="recipeModel.Ingredients[i].Quantity" />
+				<InputText placeholder=grams @bind-Value="recipeModel.Ingredients[i].Unit" />
+			</label>
+		}
+		<button class="btn btn-secondary" @onclick="AddIngredient">Add Ingredient</button>
+	</p>
+
+	<p>
+
+		<label>
+			<h2>Instructions:</h2>
+			@for (var i = 0; i < recipeModel.Instructions.Count; i++)
+			{
+				<InputText @bind-Value="recipeModel.Instructions[i]" />
+			}
+		</label>
+	</p>
+
+	<button class="btn btn-primary" type="submit">Submit</button>
+</EditForm>
+
+
+@code {
+	// private List<string> instructions = new List<string> { "Placeholder text" };
+	// private List<IngredientWithAmount> ingredientsWithAmount = new List<IngredientWithAmount> { new IngredientWithAmount { Ingredient = new Ingredient() } };
+	private RecipeModel recipeModel = new RecipeModel
+		{
+			Instructions = new List<string> { "Placeholder text" },
+			Ingredients = new List<IngredientWithAmount> { new IngredientWithAmount { Ingredient = new Ingredient() } }
+		};
+
+	private void AddIngredient()
+	{
+		recipeModel.Ingredients.Add(new IngredientWithAmount { Ingredient = new Ingredient() });
+		StateHasChanged();
+	}
+
+	private async Task HandleSubmit()
+	{
+		var dto = new CreateRecipeDTO()
+		{
+			Title = recipeModel.Title,
+			DefaultServings = recipeModel.DefaultServings,
+			DurationInMinutes = recipeModel.DurationInMinutes,
+			Instructions = recipeModel.Instructions,
+			Ingredients = recipeModel.Ingredients
+		};
+
+		await recipeService.PostRecipeDetails(dto);
+	}
+}

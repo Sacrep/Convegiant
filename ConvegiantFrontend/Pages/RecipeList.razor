@@ -1,0 +1,51 @@
+﻿@page "/recipes"
+
+@using Convegiant.Api.Spec;
+@using ConvegiantFrontend.Data
+@inject RecipeService _recipeService
+
+<h1>Recipes</h1>
+
+<p>Overview of all recipes.</p>
+
+@if (someTestData == null && recipes == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <p>someTestData</p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>No. of ingredients</th>
+                <th>Is it vegan?</th>
+                <th>Is it vegetarian?</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var recipe in recipes)
+            {
+                <tr>
+                    <td>@recipe.Title</td>
+                    <td>@recipe.IngredientCount</td>
+                    <td>@recipe.IsVegan</td>
+                    <td>@recipe.IsVegetarian</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private RecipeListItem[] recipes;
+    private string someTestData;
+
+    protected override async Task OnInitializedAsync()
+    {
+        recipes = (await _recipeService.GetRecipes().ConfigureAwait(false)).ToArray();
+        Console.WriteLine(string.Join(", ", recipes.Select(r => r.Title)));
+    }
+}

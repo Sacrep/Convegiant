@@ -1,12 +1,12 @@
-﻿using Convegiant.Infrastructure;
-using Convegiant.Infrastructure.InMemory;
-using ConvegiantFrontend.Data;
+﻿using ConvegiantFrontend.Data;
 using Microsoft.Extensions.Logging;
 
 namespace ConvegiantFrontend;
 
 public static class MauiProgram
 {
+	private const string ApiBaseAddress = "https://convegiant-api.azurewebsites.net";
+
 	public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();
@@ -24,8 +24,9 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
-		builder.Services.AddSingleton<WeatherForecastService>();
-		builder.Services.AddSingleton<IRecipeRepository, InMemoryRecipeRepository>();
+		builder.Services.AddSingleton(new HttpClient());
+		builder.Services.AddSingleton(sp => new RecipeService(ApiBaseAddress));
+
 
 		return builder.Build();
 	}
