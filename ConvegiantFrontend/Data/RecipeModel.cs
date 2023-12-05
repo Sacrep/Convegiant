@@ -14,7 +14,7 @@ public class RecipeModel
 
 	public int DurationInMinutes { get; set; }
 
-	public List<string> Instructions { get; set; } = new();
+	public List<InstructionModel> Instructions { get; set; } = [];
 
-	public List<IngredientWithAmount> Ingredients { get; set; } = new();
+	public List<IngredientWithAmount> Ingredients { get; set; } = [];
 }

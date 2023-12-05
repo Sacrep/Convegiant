@@ -510,7 +510,7 @@ namespace Convegiant.Api.Spec
         [System.Text.Json.Serialization.JsonPropertyName("instructions")]
 
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
-        public System.Collections.Generic.ICollection<string> Instructions { get; set; }
+        public System.Collections.Generic.ICollection<Instruction> Instructions { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("defaultServings")]
 
@@ -602,6 +602,22 @@ namespace Convegiant.Api.Spec
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v12.0.0.0))")]
+    public partial class Instruction
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("stepNr")]
+
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
+        public int StepNr { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("instruction")]
+
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
+        public string Instruction1 { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v12.0.0.0))")]
     public partial class Recipe
     {
 
@@ -628,7 +644,7 @@ namespace Convegiant.Api.Spec
         [System.Text.Json.Serialization.JsonPropertyName("instructions")]
 
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
-        public System.Collections.Generic.ICollection<string> Instructions { get; set; }
+        public System.Collections.Generic.ICollection<Instruction> Instructions { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("defaultServings")]
 

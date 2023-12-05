@@ -170,7 +170,7 @@
           "instructions": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/Instruction"
             },
             "nullable": true
           },
@@ -240,6 +240,20 @@
         },
         "additionalProperties": false
       },
+      "Instruction": {
+        "type": "object",
+        "properties": {
+          "stepNr": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "instruction": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Recipe": {
         "type": "object",
         "properties": {
@@ -265,7 +279,7 @@
           "instructions": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/Instruction"
             },
             "nullable": true
           },

@@ -57,7 +57,7 @@ public class RavenDbRecipeRepository : IRecipeRepository
 		using var session = _store.OpenSession();
 
 		session.Advanced.Patch<Recipe, string>(recipeId, x => x.Title, dto.Title);
-		session.Advanced.Patch<Recipe, IEnumerable<string>>(recipeId, x => x.Instructions, dto.Instructions);
+		session.Advanced.Patch<Recipe, IEnumerable<Records.Instruction>>(recipeId, x => x.Instructions, dto.Instructions);
 		session.Advanced.Patch<Recipe, IEnumerable<Records.IngredientWithAmount>>(recipeId, x => x.Ingredients, dto.Ingredients);
 		session.Advanced.Patch<Recipe, int>(recipeId, x => x.DefaultServings, dto.DefaultServings);
 		session.Advanced.Patch<Recipe, int>(recipeId, x => x.DurationInMinutes, dto.DurationInMinutes);
