@@ -44,7 +44,7 @@ jobs:
         run: dotnet publish Convegiant.API\Convegiant.API.csproj -c Release -o ${{env.PUBLISHDIR}}\ConvegiantAPI
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: .net-app
           path: ${{env.PUBLISHDIR}}\ConvegiantAPI
